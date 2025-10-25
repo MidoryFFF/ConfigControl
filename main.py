@@ -1,8 +1,10 @@
-from asyncio.windows_events import NULL
-from contextlib import nullcontext
 import sys
+import urllib.request
 
 argData = [str() for _ in range(6)]
+
+universe_URL_mask = "https://archive.ubuntu.com/ubuntu/dists/*/universe/"
+multiverse_URL_mask = "https://archive.ubuntu.com/ubuntu/dists/*/multiverse/"
 
 def ReadArgs():
     for i in range(1, len(sys.argv)):
@@ -36,6 +38,40 @@ def ArgsInfo():
     -o output mode
     -d depth of packege tree
     """)
+
+
+"""
+URL sample
+https://archive.ubuntu.com/ubuntu/dists/*/universe/
+https://archive.ubuntu.com/ubuntu/dists/*/multiverse/
+
+
+
+test_link = "http://archive.ubuntu.com/ubuntu/dists/jammy/universe/binary-amd64/Packages.gz"
+
+from modulefinder import packagePathMap
+from unicodedata import name
+from urllib.request import urlopen
+import gzip
+import shutil
+
+res = dict()
+nameBuf = ""
+valueBuf = []
+buf = []
+
+
+with urlopen(test_link) as response:
+    file_content = response.read()
+with open("jammy.txt.gz", "wb") as local_file:
+    local_file.write(file_content)
+    
+with gzip.open("jammy.txt.gz", 'rb') as f_in:
+    with open('output_file.txt', 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+"""
+
 
 ArgsInfo()
 input()
