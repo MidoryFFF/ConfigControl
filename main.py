@@ -27,6 +27,15 @@ def PrintArgs():
     for i in argData:
         print(i)
 
-ReadArgs()
-PrintArgs()
+def ArgsInfo():
+    print("""
+    -n name
+    -u URL of packege
+    -m mode
+    -v version of packege
+    -o output mode
+    -d depth of packege tree
+    """)
+
+ArgsInfo()
 input()
