@@ -1,0 +1,1 @@
+python main.py -n NONE -u http://archive.ubuntu.com/ubuntu/dists/jammy -m NONE -v NONE -o NONE -d NONE 
