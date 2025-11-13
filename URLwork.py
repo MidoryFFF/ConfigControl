@@ -2,32 +2,37 @@ from urllib.request import urlopen
 import gzip
 import shutil
 
-packeges = dict()
+class Packeges():
+    def __init__(self):
+        self.packeges = dict()
 
-def DownloadPakeges(packegeName: str):
-    universe_URL = packegeName + "/universe/binary-amd64/Packages.gz"
-    multiverse_URL = packegeName + "/multiverse/binary-amd64/Packages.gz"
+    def DownloadPakeges(self, packegeName: str):
+        universe_URL = packegeName + "/universe/binary-amd64/Packages.gz"
+        multiverse_URL = packegeName + "/multiverse/binary-amd64/Packages.gz"
 
-    with urlopen(universe_URL) as response:
-        with open("jammy.txt.gz", "wb") as local_file:
-            local_file.write(response.read())
-        
-    with gzip.open("jammy.txt.gz", 'rb') as f_in:
-        with open('output_file.txt', 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
+        with urlopen(universe_URL) as response:
+            with open("jammy.txt.gz", "wb") as local_file:
+                local_file.write(response.read())
+            
+        with gzip.open("jammy.txt.gz", 'rb') as f_in:
+            with open('output_file.txt', 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
 
-    with open('output_file.txt', "rt", encoding = 'utf-8') as unpacked:
-        Parser(unpacked.read())
+        with open('output_file.txt', "rt", encoding = 'utf-8') as unpacked:
+            self.Parser(unpacked.read())
 
-def Parser(Depends: str):
-    listOfВepends = Depends.split("\n\n")
-    for i in listOfВepends:
-        x = i.split("\n")[0]
-        x = x[len("Package: "):]
-        packeges[x] = i.split("\n")
+    def Parser(self, Depends: str):
+        listOfВepends = Depends.split("\n\n")
+        for i in listOfВepends:
+            x = i.split("\n")[0]
+            x = x[len("Package: "):]
+            self.packeges[x] = i.split("\n")
 
-def PrintDependsOfPackege(packegeName: str):
-    print(i if i[len("Depends: ")] == "Depends: " else "" for i in packeges[packegeName])
+    def PrintDependsOfPackege(self, packegeName: str):
+        for i in self.packeges[packegeName]:
+            if i[:len("Depends: ")] == "Depends: ":
+                for j in i.split(", "):
+                    print(j)
 
 """
 URL sample

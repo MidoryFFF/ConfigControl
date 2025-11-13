@@ -1,7 +1,8 @@
 import sys
-import URLwork
+from URLwork import Packeges
 
 argData = {"-n": "-", "-u": "-", "-m": "-", "-v": "-", "-o": "-", "-d": "-"}
+packs: Packeges = Packeges()
 
 def ReadArgs():
     for i in range(1, len(sys.argv)):
@@ -9,26 +10,38 @@ def ReadArgs():
         if (arg[:1] == "-"):
             if (arg == "-h" and argData[0] == ""):
                 ArgsInfo()
-            else:
-                ParsArgs(arg, sys.argv[i + 1])
+            elif (ParsArgs(arg, sys.argv[i + 1]) != True):
+                return False
+    
+    flag: bool = True
     for key in argData:
         if (argData[key] == "-"):
-            print(f"\x1b[1;31mError: None value, not all atributes in place\x1b[39;49m")
-            return False
-    
-    return True
+            print(f"\x1b[1;31mError: Missing value {key}\x1b[39;49m")
+            flag = False
+    return flag
 
 def ParsArgs(arg: str, data: str):
-    for key in argData:
-        if (key == arg):
-            argData[arg] = data
-            break
-    else:
+    if (arg == "-u" and data[:len("http")] != "http"):
         print(f"\x1b[1;31mError: Incorrect input for {arg}\x1b[39;49m")
-        
+        return False
+    elif (arg == "-d" and not(data.isdigit()) and int(data) > 0):
+        print(f"\x1b[1;31mError: Incorrect input for {arg}\x1b[39;49m")
+        return False
+    # else if (arg == "-" and ):
+    #     print(f"\x1b[1;31mError: Incorrect input for {arg}\x1b[39;49m")
+    #     return False
+    else:
+        for key in argData:
+            if (key == arg):
+                argData[arg] = data
+                return True
+        else:
+            print(f"\x1b[1;31mError: Incorrect argument {arg}\x1b[39;49m")
+            return False
 
 def GoThrueArgs():
-    URLwork.DownloadPakeges(argData["-u"])
+    packs.DownloadPakeges(argData["-u"])
+    packs.PrintDependsOfPackege(argData["-n"])
 
 def PrintArgs():
     for key in argData:
@@ -47,5 +60,4 @@ def ArgsInfo():
 if (__name__ == "__main__"):
     if (ReadArgs()):
         GoThrueArgs()
-        URLwork.PrintDependsOfPackege("0ad")
     input("Press enter to exit")

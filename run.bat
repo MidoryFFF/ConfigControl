@@ -1,1 +1,1 @@
-python main.py -n name -u URL_or_PATH -m mode -v version -o Output_mode -d depth 
+python main.py -n 0ad -u http://archive.ubuntu.com/ubuntu/dists/jammy -m NONE -v NONE -o NONE -d 1
