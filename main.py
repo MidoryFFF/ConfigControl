@@ -27,10 +27,11 @@ def ParsArgs(arg: str, data: str):
     elif (arg == "-d"):
         if (not(data.isdigit())):
             print(f"\x1b[1;31mError: Incorrect input for {arg} must be intager\x1b[39;49m")
+            return False
         elif (int(data) < 1):
             print(f"\x1b[1;31mError: Incorrect input for {arg} must be biger than 0\x1b[39;49m")
-        return False
-    elif (arg == "-"):
+            return False
+    if (arg == "-"):
         print(f"\x1b[1;31mError: Incorrect input for {arg}\x1b[39;49m")
         return False
     else:
