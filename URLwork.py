@@ -29,10 +29,13 @@ class Packeges():
             self.packeges[x] = i.split("\n")
 
     def PrintDependsOfPackege(self, packegeName: str):
-        for i in self.packeges[packegeName]:
-            if i[:len("Depends: ")] == "Depends: ":
-                for j in i.split(", "):
-                    print(j)
+        try:
+            for i in self.packeges[packegeName]:
+                if i[:len("Depends: ")] == "Depends: ":
+                    for j in i.split(", "):
+                        print(j)
+        except:
+            print("Error: can't find packege")
 
 """
 URL sample
